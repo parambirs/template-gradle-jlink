@@ -1,0 +1,30 @@
+plugins {
+    id 'application'
+    id 'org.beryx.runtime' version '1.12.5'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+dependencies {
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+}
+
+mainClassName = 'io.github.parambirs.gradle.nonmodular.image.Main'
+
+runtime {
+    modules = ['java.naming', 'java.xml', 'java.net.http']
+}
+
+tasks.runtime.doLast {
+    copy {
+        from('src/main/resources')
+        into("$buildDir/image/bin")
+    }
+}
